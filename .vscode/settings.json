@@ -1,6 +1,6 @@
 {
   "cSpell.words": ["dotenv", "jsonify", "pymssql"],
-  "files.associations": { ".djlintrc": "json" },
+  "files.associations": { ".djlintrc": "json", "*.html": "html" },
   "[python]": {
     "editor.tabSize": 4
   },
@@ -9,5 +9,6 @@
   },
   "[jinja-html]": {
     "editor.tabSize": 2
-  }
+  },
+  "tailwindCSS.includeLanguages": { "jinja-html": "html" }
 }

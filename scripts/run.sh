@@ -1,0 +1,8 @@
+FLASK_PORT=8001
+FLASK_HOST=0.0.0.0
+FLASK_APP=main.py
+
+export FLASK_APP=$FLASK_APP
+export PYTHONDONTWRITEBYTECODE=1
+
+python -m flask run -p $FLASK_PORT -h $FLASK_HOST --debug

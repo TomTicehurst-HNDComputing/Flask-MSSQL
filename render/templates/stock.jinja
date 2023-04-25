@@ -1,0 +1,32 @@
+{% from "macros/header.jinja" import header with context %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Car Sales</title>
+
+    <link rel="stylesheet" href={{ url_for("static",filename="app.css" ) }}>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="p-3">
+    {{ header() }}
+
+    <div class="flex justify-center">
+      <table class="border-spacing-4 border-separate">
+        <tr>
+          {% for prop in cars[0] %}<th>{{ prop }}</th>{% endfor %}
+        </tr>
+        {% for car in cars %}
+          <tr>
+            {% for prop in car %}<td>{{ car[prop] }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>

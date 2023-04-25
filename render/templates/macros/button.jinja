@@ -1,0 +1,10 @@
+{% macro textButton(text="Please set button text",href="/") %}
+  {% if request.endpoint == href.strip("/") %}
+    {% set href="#" %}
+  {% endif %}
+  <a href="{{ href }}">
+    <button class="text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2">
+      {{ text }}
+    </button>
+  </a>
+{% endmacro %}

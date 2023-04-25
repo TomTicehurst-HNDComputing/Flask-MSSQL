@@ -1,0 +1,22 @@
+from os import getenv
+import pymssql
+
+
+def __close__(connection, cursor):
+    connection.close()
+    cursor.close()
+
+
+def __query__(query: str, data=[]):
+    connection = pymssql.connect(getenv("MSSQL_HOST"), getenv("MSSQL_USERNAME"), getenv("MSSQL_PASSWORD"), getenv("MSSQL_DATABASE"))
+    cursor = connection.cursor(as_dict=True)
+
+    cursor.execute(query, data)
+    data = cursor.fetchall()
+
+    __close__(connection, cursor)
+    return data
+
+
+def queryAllCars():
+    return __query__("SELECT * FROM Cars")
