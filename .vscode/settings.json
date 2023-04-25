@@ -1,5 +1,13 @@
 {
   "cSpell.words": ["dotenv", "jsonify", "pymssql"],
-  "files.associations": { "*.html": "jinja-html" },
-  "editor.tabSize": 4
+  "files.associations": { ".djlintrc": "json" },
+  "[python]": {
+    "editor.tabSize": 4
+  },
+  "[html]": {
+    "editor.tabSize": 2
+  },
+  "[jinja-html]": {
+    "editor.tabSize": 2
+  }
 }
