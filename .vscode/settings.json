@@ -1,0 +1,5 @@
+{
+  "cSpell.words": ["dotenv", "jsonify", "pymssql"],
+  "files.associations": { "*.html": "jinja-html" },
+  "editor.tabSize": 4
+}
