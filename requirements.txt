@@ -3,3 +3,4 @@ pymssql
 numpy
 python-dotenv
 black
+djlint
