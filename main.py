@@ -5,7 +5,7 @@ from sys import path
 load_dotenv()
 path.append("lib")
 
-from dbConnection import queryAllCars
+from dbConnection import queryAllCars, queryCarModel
 
 app = Flask(__name__, static_folder="render/static", template_folder="render/templates")
 
@@ -17,4 +17,4 @@ def home():
 
 @app.route("/stock/")
 def stock():
-    return render_template("stock.jinja", cars=queryAllCars())
+    return render_template("stock.jinja", functions={"all": queryAllCars, "model": queryCarModel})

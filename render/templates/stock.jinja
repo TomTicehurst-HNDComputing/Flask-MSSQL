@@ -16,17 +16,21 @@
   <body class="p-3">
     {{ header() }}
 
-    <div class="flex justify-center">
-      <table class="border-spacing-4 border-separate">
-        <tr>
-          {% for prop in cars[0] %}<th>{{ prop }}</th>{% endfor %}
-        </tr>
-        {% for car in cars %}
-          <tr>
-            {% for prop in car %}<td>{{ car[prop] }}</td>{% endfor %}
-          </tr>
-        {% endfor %}
-      </table>
+    <div class="flex flex-col">
+      {% for car in functions.all() %}
+        {% set modelInfo=functions.model(car["fk_model_id"]) %}
+        <form>
+          <fieldset class="border border-solid border-slate-600 flex flex-row items-center gap-4">
+            <legend class="ml-5">{{ car.registration }}</legend>
+            <img class="w-24 h-fit"
+                 src="{{ modelInfo.logo_link }}"
+                 alt="{{ modelInfo.name }}">
+
+            {% for prop in car %}<p>{{ prop.title().replace("_"," ") }}: {{ car[prop] }}</p>{% endfor %}
+
+          </fieldset>
+        </form>
+      {% endfor %}
     </div>
   </body>
 </html>

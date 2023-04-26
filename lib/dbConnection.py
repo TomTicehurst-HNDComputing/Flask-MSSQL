@@ -19,4 +19,8 @@ def __query__(query: str, data=[]):
 
 
 def queryAllCars():
-    return __query__("SELECT * FROM Cars")
+    return __query__("SELECT fk_model_id,name,fuel_type,colour,horsepower,top_speed,zero_sixty,price,make,registration FROM Cars")
+
+
+def queryCarModel(modelID: int):
+    return __query__("SELECT name,logo_link FROM Models WHERE model_id=%s", (modelID,))[0]
