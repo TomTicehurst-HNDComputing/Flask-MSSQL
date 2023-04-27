@@ -26,7 +26,13 @@
                  src="{{ modelInfo.logo_link }}"
                  alt="{{ modelInfo.name }}">
 
-            {% for prop in car %}<p>{{ prop.title().replace("_"," ") }}: {{ car[prop] }}</p>{% endfor %}
+            {% for prop in car %}
+              <p>
+                {% if prop.lower().find("fk") < 0 %}
+                  {{ prop.title().replace("_"," ") }}: {{ car[prop] }}
+                {% endif %}
+              </p>
+            {% endfor %}
 
           </fieldset>
         </form>
