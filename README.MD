@@ -14,7 +14,7 @@
 
 | Terminal name  | Command                         |
 | -------------- | ------------------------------- |
-| Command prompt | `pyenv/scripts/activate.bat`    |
+| Command prompt | `pyenv\scripts\activate.bat`    |
 | Powershell     | `pyenv/scripts/Activate.ps1`    |
 | Bash           | `source pyenv/scripts/activate` |
 | sh             | `. pyenv/scripts/activate`      |
