@@ -18,7 +18,7 @@
 
     <div class="flex flex-col">
       {% for car in functions.all() %}
-        {% set modelInfo=functions.model(car["fk_model_id"]) %}
+        {% set modelInfo=functions.model(car["fk_make_id"]) %}
         <form>
           <fieldset class="border border-solid border-slate-600 flex flex-row items-center gap-4">
             <legend class="ml-5">{{ car.registration }}</legend>
