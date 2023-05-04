@@ -1,0 +1,49 @@
+{% from "macros/header.jinja" import header with context %}
+{% from "macros/button.jinja" import submitButton with context %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Car Sales - Login</title>
+
+    <link rel="stylesheet" href={{ url_for("static",filename="app.css" ) }}>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="p-3">
+    {{ header() }}
+    {% if session["loggedIn"] %}
+      <h1 class="text-center text-3xl">You are already logged in!</h1>
+    {% else %}
+      <div class="flex align-middle justify-center">
+        <form action="{{ url_for('apiLogin') }}" method="post">
+          <fieldset class="border border-solid border-slate-600">
+            <legend class="ml-5">Login</legend>
+            <div class="flex flex-col ml-5 mr-5 mb-3 mt-2 gap-3 items-center">
+
+              <div class="flex flex-row gap-4">
+                <label for="username">Username:</label>
+                <input class="border border-solid w-48" type="text" name="username" required>
+              </div>
+
+              <div class="flex flex-row gap-4">
+                <label for="password">Password:</label>
+                <input class="border border-solid w-48"
+                       type="password"
+                       name="password"
+                       required>
+              </div>
+
+              <div>{{ submitButton("Login") }}</div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    {% endif %}
+
+  </body>
+</html>

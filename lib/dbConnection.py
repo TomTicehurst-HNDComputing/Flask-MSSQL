@@ -18,8 +18,12 @@ def __query__(query: str, data=[]):
     return data
 
 
+def getUserByUsername(username: str):
+    return __query__("SELECT username,password FROM Users WHERE username=%s", (username,))
+
+
 def queryAllCars():
-    return __query__("SELECT fk_make_id,name,fuel_type,colour,horsepower,top_speed,zero_sixty,price,model,registration FROM Cars")
+    return __query__("SELECT * FROM Cars")
 
 
 def queryCarModel(makeID: int):
