@@ -5,8 +5,8 @@ BEGIN
 END;
 USE TomCarSales;
 
--- Function to check for a valid url being entered when entering a car's model logo
--- This function is used in the Models table's CHECK constraint
+-- Function to check for a valid url being entered when entering a car's make logo
+-- This function is used in the Make table's CHECK constraint
 IF NOT EXISTS (SELECT 1 FROM sys.objects WHERE Name = 'ValidURL')
 BEGIN
 	EXECUTE sp_executesql N'CREATE FUNCTION dbo.ValidURL(@url varchar(2048)) RETURNS tinyint AS
