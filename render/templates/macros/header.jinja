@@ -7,7 +7,16 @@
           <div class="flex flex-col items-center">
             <a href="{{ url_for('home') }}"
                class="text-4xl max-sm:text-2xl underline font-bold">Tom Car Sales</a>
-            {% if session["loggedIn"] %}<span>Welcome: {{ session["username"] }}</span>{% endif %}
+
+            <div class="flex flex-row gap-2">
+              {% if session["loggedIn"] %}
+                <span>Welcome: {{ session["username"] }}</span>
+              {% else %}
+                <span>Welcome: Guest</span>
+              {% endif %}
+
+              {% if session["message"] %}<span>| {{ session.pop("message") }}</span>{% endif %}
+            </div>
           </div>
           <span class="text-2xl font-semibold">({{ request.endpoint.title() }})</span>
         </div>
@@ -15,7 +24,11 @@
       <nav class="space-x-10 md:flex max-sm:space-x-2">
         {{ textButton("Home", url_for("home") ) }}
         {{ textButton("Stock", url_for("stock")) }}
-        {{ textButton("Login",url_for("login")) }}
+        {% if session["loggedIn"] %}
+          {{ textButton("Logout",url_for("login")) }}
+        {% else %}
+          {{ textButton("Login / Signup",url_for("login")) }}
+        {% endif %}
       </nav>
 
       <span class="flex-1 max-sm:hidden" />

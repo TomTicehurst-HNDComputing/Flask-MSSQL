@@ -7,19 +7,33 @@ def __close__(connection, cursor):
     cursor.close()
 
 
-def __query__(query: str, data=[]):
+def __query__(query: str, data=[], insert=False):
     connection = pymssql.connect(getenv("MSSQL_HOST"), getenv("MSSQL_USERNAME"), getenv("MSSQL_PASSWORD"), getenv("MSSQL_DATABASE"))
     cursor = connection.cursor(as_dict=True)
 
+    print(f"Running: {query} with data: {data}")
     cursor.execute(query, data)
-    data = cursor.fetchall()
 
-    __close__(connection, cursor)
-    return data
+    if not insert:
+        data = cursor.fetchall()
+
+        __close__(connection, cursor)
+        return data
+    else:
+        connection.commit()
+        __close__(connection, cursor)
+        return
 
 
-def getUserByUsername(username: str):
+def queryUserByUsername(username: str):
     return __query__("SELECT username,password FROM Users WHERE username=%s", (username,))
+
+
+def createUser(username: str, password: str):
+    try:
+        return __query__("INSERT INTO Users (username,password) VALUES (%s,%s)", (username, password), True)
+    except Exception as e:
+        return "User already exists!"
 
 
 def queryAllCars():
