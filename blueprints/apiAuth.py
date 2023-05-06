@@ -6,7 +6,7 @@ from dbConnection import queryUserByUsername, createUser
 apiAuth = Blueprint("apiAuth", __name__, url_prefix="/api/auth")
 
 
-@apiAuth.route("/login", methods=["POST"])
+@apiAuth.route("/login/", methods=["POST"])
 def login():
     user = queryUserByUsername(request.form["username"])
 
@@ -25,7 +25,7 @@ def login():
         return redirect(url_for("login"))
 
 
-@apiAuth.route("/logout", methods=["POST"])
+@apiAuth.route("/logout/", methods=["POST"])
 def logout():
     if session["loggedIn"] and session["username"]:
         session.pop("loggedIn", default=None)
@@ -36,7 +36,7 @@ def logout():
         return redirect(url_for("home"))
 
 
-@apiAuth.route("/create", methods=["POST"])
+@apiAuth.route("/create/", methods=["POST"])
 def create():
     passwordHash = generate_password_hash(request.form["password"])
 
