@@ -11,7 +11,6 @@ def __query__(query: str, data=[], insert=False):
     connection = pymssql.connect(getenv("MSSQL_HOST"), getenv("MSSQL_USERNAME"), getenv("MSSQL_PASSWORD"), getenv("MSSQL_DATABASE"))
     cursor = connection.cursor(as_dict=True)
 
-    print(f"Running: {query} with data: {data}")
     cursor.execute(query, data)
 
     if not insert:
