@@ -145,5 +145,11 @@ BEGIN
 		(1,0);
 END;
 
+IF NOT EXISTS (SELECT 1 FROM Selling WHERE fk_car_id=0)
+BEGIN
+	INSERT INTO Selling(markup,fk_car_id) VALUES
+	(0,0),
+	(100,3)
+END;
 
 
