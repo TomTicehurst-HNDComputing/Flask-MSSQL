@@ -25,14 +25,15 @@
 
 <br>
 
+### Run the required SQL scripts located in `scripts\sql`.
+
+- These are numbered in the order to run. Ensure you note down the password when running the "CreateUser" script
+
 #### Rename the .env.example file and fill in the blanks
 
-| Environment variable | Description                                        |
-| -------------------- | -------------------------------------------------- |
-| MSSQL_HOST           | The host of the database, most likely `localhost`  |
-| MSSQL_USERNAME       | The username of the user you wish to log in with   |
-| MSSQL_PASSWORD       | The password for your user                         |
-| MSSQL_DATABASE       | The database you wish to connect to with your user |
+| Environment variable | Description                                                                 |
+| -------------------- | --------------------------------------------------------------------------- |
+| MSSQL_PASSWORD       | The password for your user, use the password given in the CreateUser script |
 
 <br>
 

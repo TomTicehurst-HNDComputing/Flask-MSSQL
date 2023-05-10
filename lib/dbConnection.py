@@ -8,7 +8,7 @@ def __close__(connection, cursor):
 
 
 def __query__(query: str, data=[], insert=False):
-    connection = pymssql.connect(getenv("MSSQL_HOST"), getenv("MSSQL_USERNAME"), getenv("MSSQL_PASSWORD"), getenv("MSSQL_DATABASE"))
+    connection = pymssql.connect("localhost", "UserInterface", getenv("MSSQL_PASSWORD"), "TomCarSales")
     cursor = connection.cursor(as_dict=True)
 
     cursor.execute(query, data)

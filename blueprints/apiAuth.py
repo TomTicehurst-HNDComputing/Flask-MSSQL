@@ -45,6 +45,8 @@ def create():
     if response:
         session["message"] = response
     else:
+        session["loggedIn"] = True
+        session["username"] = request.form["username"]
         session["message"] = "Account created successfully!"
 
     return redirect(url_for("home"))
