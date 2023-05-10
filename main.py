@@ -8,7 +8,7 @@ load_dotenv()
 path.append("lib")
 path.append("blueprints")
 
-from dbConnection import queryAllCars, queryCarModel
+from dbConnection import queryCarsWithModels
 from apiAuth import apiAuth
 
 app = Flask(__name__, static_folder="render/static", template_folder="render/templates")
@@ -28,4 +28,9 @@ def login():
 
 @app.route("/stock/")
 def stock():
-    return render_template("stock.jinja", functions={"all": queryAllCars, "model": queryCarModel})
+    return render_template("stock.jinja", cars=queryCarsWithModels())
+
+
+@app.route("/view_car/", methods=["GET"])
+def view_car():
+    return render_template("view_car.jinja")

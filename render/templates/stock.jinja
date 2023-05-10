@@ -1,4 +1,5 @@
 {% from "macros/header.jinja" import header with context %}
+{% from "macros/button.jinja" import submitButton with context %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,23 +18,25 @@
     {{ header() }}
 
     <div class="flex flex-col">
-      {% for car in functions.all() %}
-        {% set modelInfo=functions.model(car["fk_make_id"]) %}
-        <form>
+      <h4 class="text-center text-xl mb-3">Sorted by: Newest first</h4>
+
+      {% for car in cars %}
+        <form action="{{ url_for('view_car') }}" method="get">
           <fieldset class="border border-solid border-slate-600 flex flex-row items-center gap-4">
             <legend class="ml-5">{{ car.registration }}</legend>
             <img class="w-24 h-fit"
-                 src="{{ modelInfo.logo_link }}"
-                 alt="{{ modelInfo.name }}">
+                 src="{{ car['!logo_link'] }}"
+                 alt="{{ car['model_name'] }}">
 
             {% for prop in car %}
-              <p>
-                {% if prop.lower().find("fk") < 0 %}
-                  {{ prop.title().replace("_"," ") }}: {{ car[prop] }}
-                {% endif %}
-              </p>
+              {% if not prop.startswith('!') %}
+                <span>{{ prop.title().replace('_',' ') }}: {{ car[prop] }}</span>
+              {% endif %}
             {% endfor %}
 
+            <input type="hidden" name="car_id" value="{{ car['!car_id'] }}" />
+
+            <div class="ml-auto mr-10">{{ submitButton("View","w-48") }}</div>
           </fieldset>
         </form>
       {% endfor %}

@@ -9,9 +9,10 @@
   </a>
 {% endmacro %}
 
-{% macro submitButton(text) %}
+{% macro submitButton(text,classes="") %}
   <button type="submit"
-          class="text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2">
+          class="text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2 {{ classes }}">
     {{ text }}
   </button>
+
 {% endmacro %}
