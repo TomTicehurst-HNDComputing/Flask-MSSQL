@@ -27,21 +27,21 @@
           <p>
             We sell a large range of vehicles, spanning from your simple every-day SUV and people carries, all the way up to 5L American muscle cars!
           </p>
-          <p>Visit our stockroom today!</p>
+          <a href="{{ url_for('stock') }}" class="underline text-xl">Visit our stockroom today!</a>
         </div>
 
         <div class="mt-10 flex flex-row items-center">
-          {{ actionButton("◀","previousButton","mr-5 h-8") }}
+          {{ actionButton("◀","previousButton","mr-5 h-10 w-10") }}
 
-          <a href="{{ images[0].url }}">
+          <a href="{{ images[0].url }}" id="slideshow-link">
             <img id="slideshow-image"
                  src="{{ images[0].url }}"
                  alt="Car image"
                  title="Car image - Copyright {{ images[0].author }}"
-                 class="w-auto h-[500px]">
+                 class="w-[800px] h-[500px] object-cover border-solid border-2 border-black shadow-2xl shadow-black hover:scale-[1.02] transition-transform">
           </a>
 
-          {{ actionButton("▶","nextButton","ml-5 h-8") }}
+          {{ actionButton("▶","nextButton","ml-5 h-10 w-10") }}
         </div>
       </div>
     </div>
@@ -49,7 +49,8 @@
     <script>
       const images = {{images}}.map(image => ({url: image.url.replace(/&amp;/g,"&"), author: image.author}));
 
-      const element = document.getElementById("slideshow-image");
+      const slideshowImage = document.getElementById("slideshow-image");
+      const slideshowLink = document.getElementById("slideshow-link");
       let currentIndex = 0;
 
       function nextButton(){
@@ -57,11 +58,22 @@
         if(currentIndex >= images.length){
           currentIndex = 0;
         }
-        element.src = images[currentIndex].url;
-        element.title = `Car image - Copyright ${images[currentIndex].author}`;
+        slideshowLink.href = images[currentIndex].url;
+
+        slideshowImage.src = images[currentIndex].url;
+        slideshowImage.title = `Car image - Copyright ${images[currentIndex].author}`;
       }
 
-      function previousButtion(){}
+      function previousButton(){
+        currentIndex--;
+        if (currentIndex <= -1){
+          currentIndex = images.length - 1;
+        }
+        slideshowLink.href = images[currentIndex].url;
+
+        slideshowImage.src = images[currentIndex].url;
+        slideshowImage.title = `Car image - Copyright ${images[currentIndex].author}`;
+      }
     </script>
   </body>
 </html>
