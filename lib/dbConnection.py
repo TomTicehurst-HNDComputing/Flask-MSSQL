@@ -30,6 +30,8 @@ def __query__(query: str, data=[], insert=False, orderBy={"field": None, "order"
     connection = pymssql.connect("localhost", "UserInterface", getenv("MSSQL_PASSWORD"), "TomCarSales")
     cursor = connection.cursor(as_dict=True)
 
+    print(query)
+
     if orderBy["field"] and orderBy["order"]:
         cursor.execute(f"{query} ORDER BY {orderBy['field']} {orderBy['order']} ", data)
     else:
@@ -61,4 +63,4 @@ def queryCarsWithModels(specific=None):
     if specific == None:
         return __query__(carsAndModelsQuery, orderBy={"field": "car_id", "order": "desc"})
     else:
-        return __query__("carsAndModelsQuery WHERE car_id=%s", (specific,))
+        return __query__(f"{carsAndModelsQuery} WHERE car_id=%s", (specific,))

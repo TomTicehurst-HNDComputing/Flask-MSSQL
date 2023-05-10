@@ -18,7 +18,7 @@
               {% if session["message"] %}<span>| {{ session.pop("message") }}</span>{% endif %}
             </div>
           </div>
-          <span class="text-2xl font-semibold">({{ request.endpoint.title() }})</span>
+          <span class="text-2xl font-semibold">({{ request.endpoint.title().replace("_", " ") }})</span>
         </div>
       </div>
       <nav class="space-x-10 md:flex max-sm:space-x-2">

@@ -4,21 +4,25 @@ from dotenv import load_dotenv
 from sys import path
 from os import getenv
 
+
 load_dotenv()
 path.append("lib")
 path.append("blueprints")
 
 from dbConnection import queryCarsWithModels
 from apiAuth import apiAuth
+from preload import getRandomCarImages
 
 app = Flask(__name__, static_folder="render/static", template_folder="render/templates")
 app.secret_key = getenv("FLASK_SECRET_KEY")
 app.register_blueprint(apiAuth)
 
+images = getRandomCarImages()
+
 
 @app.route("/")
 def home():
-    return render_template("home.jinja")
+    return render_template("home.jinja", images=images)
 
 
 @app.route("/login/")
@@ -33,4 +37,4 @@ def stock():
 
 @app.route("/view_car/", methods=["GET"])
 def view_car():
-    return render_template("view_car.jinja")
+    return render_template("view_car.jinja", getCar=queryCarsWithModels)

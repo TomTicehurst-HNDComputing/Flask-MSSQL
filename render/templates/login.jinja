@@ -16,6 +16,7 @@
   </head>
 
   <body class="p-3">
+
     {% if session["loggedIn"] %}
       <form action="{{ url_for('apiAuth.logout') }}"
             method="post"

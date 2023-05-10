@@ -1,5 +1,5 @@
 {% from "macros/header.jinja" import header with context %}
-{% set carId = request.args.car_id %}
+{% set car = getCar(specific=request.args.car_id) %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,5 +14,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body class="p-3">{{ header() }}</body>
+  <body class="p-3">
+
+    {{ header() }}
+
+    {{ car }}
+
+  </body>
 </html>

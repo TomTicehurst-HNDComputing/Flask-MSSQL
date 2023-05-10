@@ -3,3 +3,4 @@ pymssql
 python-dotenv
 black
 djlint
+requests

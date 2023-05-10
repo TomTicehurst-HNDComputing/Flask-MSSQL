@@ -1,18 +1,19 @@
-{% macro textButton(text="Please set button text",href="/") %}
+{% set mainStyle = "text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2" %}
+
+{% macro textButton(text="Please set button text",href="#") %}
   {% if request.endpoint == href.strip("/") %}
     {% set href="#" %}
   {% endif %}
+
   <a href="{{ href }}">
-    <button class="text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2">
-      {{ text }}
-    </button>
+    <button class="{{ mainStyle }}">{{ text }}</button>
   </a>
 {% endmacro %}
 
-{% macro submitButton(text,classes="") %}
-  <button type="submit"
-          class="text-gray-600 hover:scale-[1.155] transition-transform bg-gray-300 rounded-full py-1 px-2 {{ classes }}">
-    {{ text }}
-  </button>
+{% macro submitButton(text="Please set button text",classes="") %}
+  <button type="submit" class="{{ mainStyle }} {{ classes }}">{{ text }}</button>
+{% endmacro %}
 
+{% macro actionButton(text="Please set button text",actionName="",classes="") %}
+  <button class="{{ mainStyle }} {{ classes }}" onclick="{{ actionName }}()">{{ text }}</button>
 {% endmacro %}

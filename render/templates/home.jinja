@@ -1,4 +1,5 @@
 {% from "macros/header.jinja" import header with context %}
+{% from "macros/button.jinja" import actionButton with context %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,8 +11,57 @@
     <title>Tom Car Sales</title>
 
     <link rel="stylesheet" href={{ url_for("static",filename="app.css" ) }}>
+    {% for image in images %}<link rel="preload" as="image" href="{{ image.url }}">{% endfor %}
     <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
 
-  <body class="p-3">{{ header() }}</body>
+  <body class="p-3">
+    {{ header() }}
+
+    <div class="flex justify-center">
+      <div class="flex flex-col items-center w-3/6">
+        <h1 class="text-4xl mb-7">Welcome to TomCarSales!</h1>
+
+        <div class="flex flex-col text-center gap-5">
+          <p>
+            We sell a large range of vehicles, spanning from your simple every-day SUV and people carries, all the way up to 5L American muscle cars!
+          </p>
+          <p>Visit our stockroom today!</p>
+        </div>
+
+        <div class="mt-10 flex flex-row items-center">
+          {{ actionButton("◀","previousButton","mr-5 h-8") }}
+
+          <a href="{{ images[0].url }}">
+            <img id="slideshow-image"
+                 src="{{ images[0].url }}"
+                 alt="Car image"
+                 title="Car image - Copyright {{ images[0].author }}"
+                 class="w-auto h-[500px]">
+          </a>
+
+          {{ actionButton("▶","nextButton","ml-5 h-8") }}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const images = {{images}}.map(image => ({url: image.url.replace(/&amp;/g,"&"), author: image.author}));
+
+      const element = document.getElementById("slideshow-image");
+      let currentIndex = 0;
+
+      function nextButton(){
+        currentIndex++;
+        if(currentIndex >= images.length){
+          currentIndex = 0;
+        }
+        element.src = images[currentIndex].url;
+        element.title = `Car image - Copyright ${images[currentIndex].author}`;
+      }
+
+      function previousButtion(){}
+    </script>
+  </body>
 </html>
