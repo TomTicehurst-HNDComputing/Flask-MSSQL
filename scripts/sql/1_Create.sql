@@ -90,7 +90,7 @@ BEGIN
 		fk_car_id int NOT NULL,
 		CONSTRAINT Selling_PK PRIMARY KEY (sale_id),
 		CONSTRAINT Selling_UN UNIQUE (fk_car_id),
-		CONSTRAINT Selling_CHK CHECK (markup BETWEEN 0 and 100),
+		CONSTRAINT Selling_CHK CHECK (markup BETWEEN 0 and 200),
 		CONSTRAINT Selling_FK FOREIGN KEY (fk_car_id) REFERENCES Cars(car_id)
 	);
 END;
@@ -145,11 +145,44 @@ BEGIN
 		(1,0);
 END;
 
+-- Ensures that no data is present before inserting dummy data
 IF NOT EXISTS (SELECT 1 FROM Selling WHERE fk_car_id=0)
 BEGIN
 	INSERT INTO Selling(markup,fk_car_id) VALUES
-	(0,0),
-	(100,3)
+	(DEFAULT,0),
+	(200,3)
 END;
 
+
+-- Creates a view to select all cars with model information - this is used in the user interface
+CREATE VIEW cars_and_makes AS
+	SELECT
+		car_id as '!car_id',
+		Cars.name as 'name',
+		fuel_type,
+		colour,
+		horsepower,
+		top_speed,
+		zero_sixty,
+		price,
+		model,
+		doors,
+		transmission,
+		registration,
+		logo_link as '!logo_link'
+	FROM Cars
+		INNER JOIN Makes ON Cars.fk_make_id=make_id;
+
+CREATE VIEW cars_being_sold AS
+	SELECT
+		sale_id as '!sale_id',Cars.fk_user_id as '!user_id',markup,cars_and_makes.*
+	FROM cars_and_makes
+		INNER JOIN Selling on [!car_id]=fk_car_id
+		INNER JOIN Cars on [!car_id]=car_id;
+
+CREATE VIEW cars_being_watched AS
+	SELECT
+		watching_id as '!watching_id',fk_user_id as '!user_id',cars_and_makes.*
+	FROM cars_and_makes
+		INNER JOIN Watching on [!car_id]=fk_car_id;
 
