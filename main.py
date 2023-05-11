@@ -34,6 +34,6 @@ def stock():
     return render_template("stock.jinja", cars=queryCarsWithModels())
 
 
-@app.route("/view_car/", methods=["GET"])
-def view_car():
-    return render_template("view_car.jinja", getCar=queryCarsWithModels)
+@app.route("/view_car/<car_id>/")
+def view_car_id(car_id):
+    return render_template("view_car.jinja", getCar=queryCarsWithModels, car_id=car_id)

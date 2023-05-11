@@ -21,20 +21,20 @@
       <h4 class="text-center text-xl mb-3">Sorted by: Newest first</h4>
 
       {% for car in cars %}
-        <form action="{{ url_for('view_car') }}" method="get">
+        <form action="{{ url_for('view_car_id', car_id=car['!car_id'] ) }}"
+              method="get">
           <fieldset class="border border-solid border-slate-600 flex flex-row items-center gap-4">
             <legend class="ml-5">{{ car.registration }}</legend>
-            <img class="w-24 h-fit"
+            <img class="w-24 h-24 object-cover"
                  src="{{ car['!logo_link'] }}"
-                 alt="{{ car['model_name'] }}">
+                 alt="{{ car['model_name'] }}"
+                 draggable="false">
 
             {% for prop in car %}
               {% if not prop.startswith('!') %}
                 <span>{{ prop.title().replace('_',' ') }}: {{ car[prop] }}</span>
               {% endif %}
             {% endfor %}
-
-            <input type="hidden" name="car_id" value="{{ car['!car_id'] }}" />
 
             <div class="ml-auto mr-10">{{ submitButton("View","w-48") }}</div>
           </fieldset>
