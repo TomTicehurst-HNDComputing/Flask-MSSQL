@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from sys import path
 from os import getenv
 
-
 load_dotenv()
 path.append("lib")
 path.append("blueprints")

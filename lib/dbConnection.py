@@ -1,39 +1,16 @@
 from os import getenv
 import pymssql
 
-carsAndModelsQuery = """
-SELECT
-car_id as '!car_id',
-Cars.name as 'name',
-fuel_type,
-colour,
-horsepower,
-top_speed,
-zero_sixty,
-'£' + FORMAT(price,'N2') as "price",
-model,
-doors,
-transmission,
-registration,
-logo_link as '!logo_link'
-	FROM Cars
-		INNER JOIN Makes ON Cars.fk_make_id=make_id
-"""
-
 
 def __close__(connection, cursor):
     connection.close()
     cursor.close()
 
 
-def __query__(query: str, data=[], insert=False, orderBy={"field": None, "order": None}):
+def __query__(query: str, data=[], insert=False):
     connection = pymssql.connect("localhost", "UserInterface", getenv("MSSQL_PASSWORD"), "TomCarSales")
     cursor = connection.cursor(as_dict=True)
-
-    if orderBy["field"] and orderBy["order"]:
-        cursor.execute(f"{query} ORDER BY {orderBy['field']} {orderBy['order']} ", data)
-    else:
-        cursor.execute(query, data)
+    cursor.execute(query, data)
 
     if not insert:
         data = cursor.fetchall()
@@ -59,6 +36,6 @@ def createUser(username: str, password: str):
 
 def queryCarsWithModels(specific=None):
     if specific == None:
-        return __query__(carsAndModelsQuery, orderBy={"field": "car_id", "order": "desc"})
+        return __query__("SELECT * FROM cars_and_makes ORDER BY [!car_id] DESC")
     else:
-        return __query__(f"{carsAndModelsQuery} WHERE car_id=%s", (specific,))
+        return __query__("SELECT * FROM cars_and_makes WHERE [!car_id]=%s", (specific,))
