@@ -1,4 +1,6 @@
 {% from "macros/header.jinja" import header with context %}
+{% from "macros/button.jinja" import submitButton,textButton with context %}
+
 {% set car = getCar(specific=car_id)[0] %}
 
 <!DOCTYPE html>
@@ -15,17 +17,48 @@
   </head>
 
   <body class="p-3">
-
     {{ header() }}
 
-    <div class="flex flex-row gap-7 text-center">
-      {% for prop in car %}
-        <p>
-          {{ prop.title() }}:
-          <br />
-          {{ car[prop] }}
-        </p>
-      {% endfor %}
+    <div class="flex flex-row justify-center gap-12">
+      <form method="post"
+            action="{{ url_for('apiActions.watchCarID',car_id=car['!car_id']) }}">
+
+        <div class="flex flex-col gap-y-5">
+          <img class="w-auto h-96 object-cover"
+               src="{{ car['!image_link'] }}"
+               alt="{{ car['name'] }}"
+               draggable="false">
+
+          <div class="flex flex-row justify-evenly">
+            {% if session.get("user_id") != None %}
+              {% if getWatched(session.get("user_id"),car["!car_id"])|length == 0 %}
+                {{ submitButton("Watch","w-48") }}
+              {% else %}
+                {{ submitButton("Unwatch","w-48") }}
+              {% endif %}
+            {% endif %}
+            {{ textButton("Contact",classes="w-48") }}
+          </div>
+        </div>
+
+      </form>
+
+      <form>
+        <fieldset class="border border-solid border-slate-600 flex flex-col items-center">
+          <legend class="ml-5">{{ car['name'] }}</legend>
+
+          <img class="w-24 h-24 object-cover mt-2 mb-3"
+               src="{{ car['!logo_link'] }}"
+               alt="{{ car['model_name'] }}"
+               draggable="false">
+
+          {% for prop in car %}
+            {% if not prop.startswith('!') %}
+              <span class="mr-5 ml-5 mb-4">{{ prop.title().replace('_',' ') }}: {{ car[prop] }}</span>
+            {% endif %}
+          {% endfor %}
+        </fieldset>
+      </form>
     </div>
   </body>
 </html>

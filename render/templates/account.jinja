@@ -1,0 +1,42 @@
+{% from "macros/header.jinja" import header with context %}
+{% from "macros/button.jinja" import submitButton with context %}
+{% set cars = getWatched(session.get("user_id")) %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Car Sales</title>
+
+    <link rel="stylesheet" href={{ url_for("static",filename="app.css" ) }}>
+    {% for image in images %}<link rel="preload" as="image" href="{{ image.url }}">{% endfor %}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+  </head>
+
+  <body class="p-3">
+    {{ header() }}
+    <div class="flex flex-col gap-5 items-center ">
+      <h1 class="text-4xl mb-7">Your watched cars</h1>
+
+      {% for car in cars %}
+        <form method="get"
+              action="{{ url_for('view_car_id',car_id=car['!car_id']) }}">
+          <fieldset class="border border-solid border-slate-600 flex flex-row items-center gap-4">
+            <legend class="ml-5">{{ submitButton(car.registration,noStyles=True,classes="text-blue-900") }}</legend>
+            <div class="ml-5"></div>
+            {% for prop in car %}
+              {% if not prop.startswith('!') %}
+                <span class="mb-2">{{ prop.title().replace('_',' ') }}: {{ car[prop] }}</span>
+              {% endif %}
+            {% endfor %}
+            <div class="mr-5"></div>
+          </fieldset>
+        </form>
+      {% endfor %}
+    </div>
+  </body>
+</html>

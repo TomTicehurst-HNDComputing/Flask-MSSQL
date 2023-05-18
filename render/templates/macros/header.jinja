@@ -25,6 +25,7 @@
         {{ textButton("Home", url_for("home") ) }}
         {{ textButton("Stock", url_for("stock")) }}
         {% if session["loggedIn"] %}
+          {{ textButton("My account",url_for("account")) }}
           {{ textButton("Logout",url_for("login")) }}
         {% else %}
           {{ textButton("Login / Signup",url_for("login")) }}
