@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template
 
 from dotenv import load_dotenv
 from sys import path
@@ -8,18 +8,18 @@ load_dotenv()
 path.append("lib")
 path.append("blueprints")
 
-from dbConnection import queryCarsWithModels, queryWatched, queryUserByUsername
+from dbConnection import queryCarsWithModels, queryWatched
 from preload import getRandomCarImages
 
 from apiAuth import apiAuth
 from apiActions import apiActions
 
+images = getRandomCarImages()
+
 app = Flask(__name__, static_folder="render/static", template_folder="render/templates")
 app.secret_key = getenv("FLASK_SECRET_KEY")
 app.register_blueprint(apiAuth)
 app.register_blueprint(apiActions)
-
-images = getRandomCarImages()
 
 
 @app.route("/")
@@ -45,3 +45,6 @@ def view_car_id(car_id):
 @app.route("/account/")
 def account():
     return render_template("account.jinja", getWatched=queryWatched)
+
+
+app.run(host="0.0.0.0", port="80", debug=True)
