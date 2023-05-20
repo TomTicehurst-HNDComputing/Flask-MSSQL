@@ -1,5 +1,5 @@
 pyenv/
 .env
 __pycache__/
-build
+build/*.exe
 main.spec
