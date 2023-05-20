@@ -2,4 +2,5 @@ pyenv/
 .env
 __pycache__/
 dist/*.exe
+build
 main.spec
